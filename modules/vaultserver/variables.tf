@@ -54,7 +54,6 @@ variable "common_name" {
 variable "organization" {
   description = "name of organization"
   type = string
-  default = "Sasano Vault"
 } 
 
 variable "raft_node" {
