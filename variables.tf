@@ -59,5 +59,4 @@ variable "common_name" {
 variable "organization" {
   description = "name of organization"
   type = string
-  default = "Sasano_Vault"
 } 
