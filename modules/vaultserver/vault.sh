@@ -124,4 +124,3 @@ sudo chmod +x /tmp/authn.sh
 
 /tmp/authn.sh
 
-vault operator init
