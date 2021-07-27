@@ -229,6 +229,7 @@ module "server1" {
   private_key_pem   = tls_private_key.ca.private_key_pem
   cert_pem          = tls_self_signed_cert.ca.cert_pem
   kms               = aws_kms_key.kms_key_vault.key_id
+  organization      = var.organization
 }
 
 module "server2" {
@@ -249,6 +250,7 @@ module "server2" {
   private_key_pem   = tls_private_key.ca.private_key_pem
   cert_pem          = tls_self_signed_cert.ca.cert_pem
   kms               = aws_kms_key.kms_key_vault.key_id
+  organization      = var.organization
 }
 
 module "server3" {
@@ -269,47 +271,5 @@ module "server3" {
   private_key_pem   = tls_private_key.ca.private_key_pem
   cert_pem          = tls_self_signed_cert.ca.cert_pem
   kms               = aws_kms_key.kms_key_vault.key_id
+  organization      = var.organization
 }
-
-
-# # Classic Load Balancer
-
-# resource "aws_elb" "elb" {
-#   name               = "vault-elb"
-#   subnets = [module.subnet1.subnet_id, module.subnet2.subnet_id, module.subnet3.subnet_id]
-#   security_groups = [aws_security_group.sg_vpc.id]
-  
-#   listener {
-#     instance_port     = 8000
-#     instance_protocol = "http"
-#     lb_port           = 80
-#     lb_protocol       = "http"
-#   }
-
-# /* hier muss noch ein Zertifikat rein
-#   listener {
-#     instance_port      = 8000
-#     instance_protocol  = "http"
-#     lb_port            = 443
-#     lb_protocol        = "https"
-#   }
-# */
-
-#   health_check {
-#     healthy_threshold   = 2
-#     unhealthy_threshold = 5
-#     timeout             = 25
-#     target              = "HTTP:8000/"
-#     interval            = 30
-#   }
-
-#   instances                   = [module.server1.instance_id, module.server2.instance_id, module.server3.instance_id, module.server4.instance_id, module.server5.instance_id]
-#   cross_zone_load_balancing   = true
-#   idle_timeout                = 400
-#   connection_draining         = true
-#   connection_draining_timeout = 400
-
-#   tags = {
-#     Name = "vault-elb"
-#   }
-# }
