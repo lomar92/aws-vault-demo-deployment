@@ -108,19 +108,11 @@ sudo systemctl enable vault
 sudo systemctl start vault
 
 
-sudo cat << EOF > /tmp/authn.sh
-set -v
+
 export VAULT_ADDR="http://127.0.0.1:8200"
 vault operator init -format=json > vault.txt
 cat vault.txt | jq -r .root_token > vaulttoken
 pwd
 export VAULT_TOKEN=$(cat vaulttoken)
-EOF
 
-
-sleep 60
-
-sudo chmod +x /tmp/authn.sh
-
-/tmp/authn.sh
 
