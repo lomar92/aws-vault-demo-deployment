@@ -6,6 +6,7 @@ HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/local-hostname)
 PUBLIC_HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
 
 sudo yum install -y yum-utils
+sudo yum install jq
 
 curl --remote-name "https://releases.hashicorp.com/vault/1.7.3+ent/vault_1.7.3+ent_linux_amd64.zip"
 curl --remote-name "https://releases.hashicorp.com/vault/1.7.3+ent/vault_1.7.3+ent_SHA256SUMS"
@@ -111,8 +112,7 @@ sudo systemctl start vault
 
 export VAULT_ADDR="http://127.0.0.1:8200"
 vault operator init -format=json > vault.txt
-cat vault.txt | jq -r .root_token > vaulttoken
-pwd
+sudo cat vault.txt | jq -r .root_token > vaulttoken
 export VAULT_TOKEN=$(cat vaulttoken)
 
 
