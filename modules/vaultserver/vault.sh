@@ -122,4 +122,9 @@ pwd
 VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
 echo $VAULT_TOKEN
 
-# vault login token=$(cat /etc/vault.d/vaulttoken)
+# log into vault
+vault login token=$(cat /etc/vault.d/vaulttoken)
+# enable AWS auth method
+vault auth enable aws
+
+vault write auth/aws/config/client
