@@ -4,8 +4,8 @@
 # From: https://alestic.com/2010/12/ec2-user-data-output/
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
-PRIVATE_IP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
-PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+# PRIVATE_IP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+# PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
 HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/local-hostname)
 PUBLIC_HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
 
@@ -116,10 +116,10 @@ sudo systemctl start vault
 sleep 60
 
 export VAULT_ADDR=https://127.0.0.1:8200
-vault operator init -format=json > vault.txt
-sudo cat vault.txt | jq -r .root_token > vaulttoken
+vault operator init -format=json > /etc/vault.d/vault.txt
+sudo cat vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 pwd
-export VAULT_TOKEN=$(cat vaulttoken)
+export VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
 
 # sudo cat << 'EOF' > /tmp/authn.sh
 # set -v
