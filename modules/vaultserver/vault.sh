@@ -119,7 +119,8 @@ export VAULT_ADDR=https://127.0.0.1:8200
 vault operator init -format=json > /etc/vault.d/vault.txt
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 pwd
-export VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
+VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
+echo $VAULT_TOKEN
 
 # sudo cat << 'EOF' > /tmp/authn.sh
 # set -v
