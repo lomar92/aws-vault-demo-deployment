@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Bootstrap script for installing Vault 
 # Send the log output from this script to user-data.log, syslog, and the console
 # From: https://alestic.com/2010/12/ec2-user-data-output/
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
@@ -118,7 +119,7 @@ sleep 60
 export VAULT_ADDR=https://127.0.0.1:8200
 vault operator init -format=json > /etc/vault.d/vault.txt
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
-pwd
-VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
-echo $VAULT_TOKEN
+
+# VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
+
 
