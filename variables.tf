@@ -60,3 +60,7 @@ variable "organization" {
   description = "name of organization"
   type = string
 } 
+
+variable "vaultdb_password" {
+  descriptionn = "Password for RDS user Vault"
+}
