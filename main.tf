@@ -153,7 +153,7 @@ data "aws_iam_policy_document" "vault-server" {
     sid    = "1"
     effect = "Allow"
 
-    actions = ["ec2:DescribeInstances", "ec2:*", "rds:*"]
+    actions = ["ec2:DescribeInstances", "ec2:*"]
 
     resources = ["*"]
   }
