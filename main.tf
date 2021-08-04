@@ -14,12 +14,13 @@ terraform {
 }
 provider "aws" {
   region = "eu-central-1"
-  default_tags = {
+}
+
+default_tags = {
     environment = "aws"
     name = "vault"
   }
-}
-
+  
 resource "aws_vpc" "vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
