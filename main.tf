@@ -1,8 +1,5 @@
 terraform {
   required_version = ">= 1.0.0"
-  tags = {
-    environment = "AWS"
-  }
 
   required_providers {
     aws = {
@@ -17,6 +14,10 @@ terraform {
 }
 provider "aws" {
   region = "eu-central-1"
+  default_tags = {
+    environment = "aws"
+    name = "vault"
+  }
 }
 
 resource "aws_vpc" "vpc" {
