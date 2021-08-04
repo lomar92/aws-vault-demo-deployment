@@ -1,5 +1,8 @@
 terraform {
   required_version = ">= 1.0.0"
+  tags = {
+    environment = "AWS"
+  }
 
   required_providers {
     aws = {
