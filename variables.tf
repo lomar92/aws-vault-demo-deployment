@@ -61,3 +61,6 @@ variable "organization" {
   type = string
 } 
 
+variable "account_id" {
+  description = "AWS account ID"
+}
