@@ -120,6 +120,7 @@ export VAULT_ADDR=https://127.0.0.1:8200
 vault operator init -format=json > /etc/vault.d/vault.txt
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 
+# on your instance run the following commands:
 # VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
 # vault login $VAULT_TOKEN
 
@@ -129,8 +130,8 @@ vault secrets enable -path="secret" kv
 vault kv put secret/webapp/config ttl='1h' username='appuser' password='1n1t1alpw'
 
 echo "path \"secret/webapp/*\" {
->     capabilities = [\"read\", \"list\"]
-> }" | vault policy write webapp -
+     capabilities = [\"read\", \"list\"]
+   }" | vault policy write webapp -
 
 vault auth enable aws
 vault write -force auth/aws/config/client
