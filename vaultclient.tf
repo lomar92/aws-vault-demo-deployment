@@ -12,6 +12,6 @@ resource "aws_instance" "vault-client" {
   iam_instance_profile        = aws_iam_instance_profile.vault-client.id
 
   tags = {
-    Name = var.instance_name
+    Name = vault-client
   }
 }
