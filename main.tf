@@ -230,6 +230,7 @@ module "server1" {
   cert_pem          = tls_self_signed_cert.ca.cert_pem
   kms               = aws_kms_key.kms_key_vault.key_id
   organization      = var.organization
+  account_id        = var.account_id
 }
 
 module "server2" {
@@ -251,6 +252,7 @@ module "server2" {
   cert_pem          = tls_self_signed_cert.ca.cert_pem
   kms               = aws_kms_key.kms_key_vault.key_id
   organization      = var.organization
+  account_id        = var.account_id
 }
 
 module "server3" {
@@ -272,4 +274,5 @@ module "server3" {
   cert_pem          = tls_self_signed_cert.ca.cert_pem
   kms               = aws_kms_key.kms_key_vault.key_id
   organization      = var.organization
+  account_id        = var.account_id
 }
