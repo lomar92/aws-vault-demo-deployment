@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# at this point this script is a complete mess and used for learning by failure
+
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
 sudo yum update -y
@@ -13,32 +16,9 @@ unzip vault_1.7.3+ent_linux_amd64.zip -d /usr/local/bin/
 
 chmod 0755 /usr/local/bin/vault
 sudo chown awsuser:awsuser /usr/local/bin/vault
-sudo touch /etc/vault.d/vault.hcl
-sudo chown --recursive vault:vault /etc/vault.d
-sudo chmod 640 /etc/vault.d/vault.hcl
 
-sudo mkdir /opt/vault
-sudo chown -R awsuser:awsuser /opt/vault
 
-sudo cat << EOF > /lib/systemd/system/vault.service
-[Unit]
-Description=Vault Agent
-Requires=network-online.target
-After=network-online.target
-[Service]
-Restart=on-failure
-PermissionsStartOnly=true
-ExecStartPre=/sbin/setcap 'cap_ipc_lock=+ep' /usr/local/bin/vault
-ExecStart=/usr/local/bin/vault agent -config /etc/vault.d/config.hcl
-ExecReload=/bin/kill -HUP $MAINPID
-KillSignal=SIGTERM
-User=awsuser
-Group=awsuser
-[Install]
-WantedBy=multi-user.target
-EOF
-
-cat << EOF > /etc/vault.d/config.hcl
+cat << EOF > /home/ec2-user/vault-agent.hcl
 exit_after_auth = true
 pid_file = "./pidfile"
 
