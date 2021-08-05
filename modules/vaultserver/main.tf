@@ -16,6 +16,8 @@ data "template_file" "user_data" {
     ca_cert = "${var.cert_pem}"
     raft_node = "${var.raft_node}"
     kms_key_id = "${var.kms}"
+    account_id = "${var.account_id}"
+    role_name = "${aws_iam_role.vault-server.name}"
   }
 }
 resource "aws_instance" "vaultserver" {                    

@@ -121,5 +121,23 @@ vault operator init -format=json > /etc/vault.d/vault.txt
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 
 # VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
+# vault login $VAULT_TOKEN
 
+# script for vault agent demo
+sudo cat << EOF > /home/ec2-user/aws_auth.sh
+vault secrets enable -path="secret" kv
+vault kv put secret/webapp/config ttl='1h' username='appuser' password='1n1t1alpw'
 
+echo "path \"secret/webapp/*\" {
+>     capabilities = [\"read\", \"list\"]
+> }" | vault policy write webapp -
+
+vault auth enable aws
+vault write -force auth/aws/config/client
+
+vault write auth/aws/role/demo-iam-role auth_type=iam bound_iam_principal_arn="arn:aws:iam::${account_id}:role/${role_name}" policies=webapp ttl=24h
+EOF
+
+sudo chmod +x /home/ec2-user/aws_auth.sh
+
+echo "Done"
