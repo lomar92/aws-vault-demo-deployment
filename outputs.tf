@@ -10,3 +10,6 @@ output "public_ip3" {
   value = module.server3.public_ip_instance
 }
 
+output "public_ip_client" {
+  value = aws_instance.vault-client.public_ip
+}

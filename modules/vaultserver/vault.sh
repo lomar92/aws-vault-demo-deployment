@@ -127,7 +127,7 @@ sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 # script for vault agent demo
 sudo cat << EOF > /home/ec2-user/aws_auth.sh
 vault secrets enable -path="secret" kv
-vault kv put secret/webapp/config ttl='1h' username='appuser' password='1n1t1alpw'
+vault kv put secret/webapp/config ttl='60s' username='appuser' password='ini7ia1pw'
 
 echo "path \"secret/webapp/*\" {
      capabilities = [\"read\", \"list\"]
@@ -142,3 +142,7 @@ EOF
 sudo chmod +x /home/ec2-user/aws_auth.sh
 
 echo "Done"
+
+# on your instance run the following commands:
+# VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
+# vault login $VAULT_TOKEN
