@@ -4,6 +4,7 @@ data "template_file" "user_data" {
 
 resource "aws_instance" "vault-client" {                    
   security_group              = aws_security_group.sg_vpc.id 
+  instance_name               = "vault-client"
   ami                         = var.ami 
   instance_type               = var.instance_type
   key_name                    = var.key
@@ -12,6 +13,6 @@ resource "aws_instance" "vault-client" {
   iam_instance_profile        = aws_iam_instance_profile.vault-client.id
 
   tags = {
-    Name = vault-client
+    Name = aws_instance.vault-client.instance_name
   }
 }
