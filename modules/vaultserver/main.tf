@@ -19,7 +19,7 @@ data "template_file" "user_data" {
     raft_node = "${var.raft_node}"
     kms_key_id = "${var.kms}"
     account_id = "${var.account_id}"
-    role_name = "${data.aws_iam_role.vault-server.name}"
+    role_name = "${role_name}"
   }
 }
 resource "aws_instance" "vaultserver" {                    
