@@ -2,7 +2,8 @@ data "template_file" "user_data" {
   template = file("${path.module}/webapp.sh")
 }
 
-resource "aws_instance" "vault-client" {                    
+resource "aws_instance" "vault-client" {       
+    subnet_id         = module.subnet1.subnet_id             
   vpc_security_group_ids      = [aws_security_group.sg_vpc.id] 
   ami                         = var.ami 
   instance_type               = var.instance_type
