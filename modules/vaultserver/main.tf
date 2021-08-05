@@ -7,6 +7,10 @@ data "template_file" "user_data" {
   template = file("${path.module}/webapp.sh")
 } */
 
+data "aws_iam_role" "vault-server" {
+  name = "vault-server-role"
+}
+
 data "template_file" "user_data" {
   template = file("${path.module}/vault.sh")
   vars = {
