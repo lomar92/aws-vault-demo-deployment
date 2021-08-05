@@ -59,7 +59,7 @@ auto_auth {
 }
 
 vault {
-  address = "${vault_addr}"
+  address = "https://vault-server-private-ip:8200"
 }
 EOF
 
