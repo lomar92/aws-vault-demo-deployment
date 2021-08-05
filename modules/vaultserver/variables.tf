@@ -80,3 +80,7 @@ variable "cert_pem" {
   description = "certificate of CA"
   type = string
 }
+
+variable "account_id" {
+  description = "AWS account ID"
+}
