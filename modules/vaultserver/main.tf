@@ -7,9 +7,7 @@ data "template_file" "user_data" {
   template = file("${path.module}/webapp.sh")
 } */
 
-data "aws_iam_role" "vault-server" {
-  name = "vault-server-role"
-}
+
 
 data "template_file" "user_data" {
   template = file("${path.module}/vault.sh")
@@ -21,7 +19,7 @@ data "template_file" "user_data" {
     raft_node = "${var.raft_node}"
     kms_key_id = "${var.kms}"
     account_id = "${var.account_id}"
-    role_name = "${aws_iam_role.vault-server.name}"
+    role_name = "${data.aws_iam_role.vault-server.name}"
   }
 }
 resource "aws_instance" "vaultserver" {                    
