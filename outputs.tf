@@ -10,6 +10,3 @@ output "public_ip3" {
   value = module.server3.public_ip_instance
 }
 
-output "role_name" {
-  value = aws_iam_role.vault-server.name
-}

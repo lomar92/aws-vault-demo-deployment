@@ -135,7 +135,7 @@ echo "path \"secret/webapp/*\" {
 vault auth enable aws
 vault write -force auth/aws/config/client
 
-vault write auth/aws/role/demo-iam-role auth_type=iam bound_iam_principal_arn="arn:aws:iam::${account_id}:role/${role_name}" policies=webapp ttl=24h
+vault write auth/aws/role/demo-iam-role auth_type=iam bound_iam_principal_arn="arn:aws:iam::${account_id}:role/vault-server-role" policies=webapp ttl=24h
 EOF
 
 sudo chmod +x /home/ec2-user/aws_auth.sh
