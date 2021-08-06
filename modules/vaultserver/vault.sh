@@ -123,26 +123,3 @@ sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 # on your instance run the following commands:
 # VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
 # vault login $VAULT_TOKEN
-
-# script for vault agent demo
-sudo cat << EOF > /home/ec2-user/aws_auth.sh
-vault secrets enable -path="secret" kv
-vault kv put secret/webapp/config ttl='60s' username='appuser' password='ini7ia1pw'
-
-echo "path \"secret/webapp/*\" {
-     capabilities = [\"read\", \"list\"]
-   }" | vault policy write webapp -
-
-vault auth enable aws
-vault write -force auth/aws/config/client
-
-vault write auth/aws/role/demo-iam-role auth_type=iam bound_iam_principal_arn="arn:aws:iam::${account_id}:role/vault-server-role" policies=webapp ttl=24h
-EOF
-
-sudo chmod +x /home/ec2-user/aws_auth.sh
-
-echo "Done"
-
-# on your instance run the following commands:
-# VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
-# vault login $VAULT_TOKEN
