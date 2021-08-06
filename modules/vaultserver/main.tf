@@ -2,13 +2,6 @@ terraform {
   required_version = ">= 1.0.0"
   }
 
-/*Webserver zum Testen
-data "template_file" "user_data" {
-  template = file("${path.module}/webapp.sh")
-} */
-
-
-
 data "template_file" "user_data" {
   template = file("${path.module}/vault.sh")
   vars = {
