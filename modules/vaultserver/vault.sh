@@ -39,9 +39,9 @@ sudo chmod 640 /etc/vault.d/vault.hcl
 
 sudo mkdir --parents /opt/vault/tls
 sudo touch /opt/vault/tls/vault-cert.pem
-/opt/vault/tls/vault-key.pem
-/opt/vault/tls/vault-ca.pem
-/opt/vault/license.hclic
+sudo touch /opt/vault/tls/vault-key.pem
+sudo touch /opt/vault/tls/vault-ca.pem
+sudo touch /opt/vault/license.hclic
 sudo chown root:root /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
 sudo chown root:vault /opt/vault/tls/vault-key.pem
 sudo chmod 0644 /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
@@ -138,6 +138,7 @@ sudo systemctl start vault
 
 sleep 60
 
+export VAULT_CACERT=/opt/vault/tls/vault-ca.pem
 export VAULT_ADDR=https://127.0.0.1:8200
 vault operator init -format=json > /etc/vault.d/vault.txt
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
