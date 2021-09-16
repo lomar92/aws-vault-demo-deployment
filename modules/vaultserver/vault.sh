@@ -41,7 +41,8 @@ sudo mkdir --parents /opt/vault/tls
 sudo touch /opt/vault/tls/vault-cert.pem
 sudo touch /opt/vault/tls/vault-key.pem
 sudo touch /opt/vault/tls/vault-ca.pem
-sudo touch /opt/vault/license.hclic
+sudo touch /opt/vault/vault.hclic
+
 sudo chown root:root /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
 sudo chown root:vault /opt/vault/tls/vault-key.pem
 sudo chmod 0644 /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
@@ -53,7 +54,7 @@ sudo chmod 0640 /opt/vault/vault.hclic
 sudo echo "${cert}" > /opt/vault/tls/vault-cert.pem
 sudo echo "${key}" > /opt/vault/tls/vault-key.pem
 sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
-sudo echo "${license}" > /opt/vault/license.hclic
+sudo echo "${license}" > /opt/vault/vault.hclic
 
 
 sudo cat << EOF > /etc/vault.d/vault.hcl
@@ -82,7 +83,7 @@ seal "awskms" {
   region     = "eu-central-1"
   kms_key_id = "${kms_key_id}"
 }
-license_path = "/opt/vault/license.hclic"
+license_path = "/opt/vault/vault.hclic"
 ui = true 
 EOF
 
