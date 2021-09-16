@@ -34,9 +34,9 @@ sudo mkdir --parents /etc/vault.d
 sudo echo "${cert}" > /etc/ssl/certs/fullchain.crt
 sudo echo "${key}" > /etc/ssl/certs/privkey.key
 sudo echo "${ca_cert}" > /etc/ssl/certs/ca.crt
-sudo echo "${cert}" > /opt/vault/tls/vault-cert.pem
-sudo echo "${key}" > /opt/vault/tls/vault-key.pem
-sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
+# sudo echo "${cert}" > /opt/vault/tls/vault-cert.pem
+# sudo echo "${key}" > /opt/vault/tls/vault-key.pem
+# sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
 sudo echo "${license}" > /etc/vault.d/license.hclic
 
 sudo touch /etc/vault.d/vault.hcl
@@ -59,9 +59,9 @@ storage "raft" {
     auto_join = "provider=aws addr_type=public_v4 region=eu-central-1 tag_key=project tag_value=vault"
     auto_join_scheme        = "https"
     leader_tls_servername = "vault-raft.eu-central-1.compute.internal"
-    leader_ca_cert_file     = "/opt/vault/tls/vault-ca.pem"
-    leader_client_cert_file = "/opt/vault/tls/vault-cert.pem"
-    leader_client_key_file  = "/opt/vault/tls/vault-key.pem"
+    leader_ca_cert_file     = "/etc/ssl/certs/ca.crt"
+    leader_client_cert_file = "/etc/ssl/certs/fullchain.crt"
+    leader_client_key_file  = "/etc/ssl/certs/privkey.key"
   }
 }
 seal "awskms" {
