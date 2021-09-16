@@ -31,24 +31,17 @@ sudo setcap cap_ipc_lock=+ep /usr/local/bin/vault
 sudo useradd --system --home /etc/vault.d --shell /bin/false vault
 
 sudo mkdir --parents /etc/vault.d
-# sudo echo "${cert}" > /etc/ssl/certs/fullchain.crt
-# sudo echo "${key}" > /etc/ssl/certs/privkey.key
-# sudo echo "${ca_cert}" > /etc/ssl/certs/ca.crt
-# sudo echo "${license}" > /etc/vault.d/license.hclic
-
 
 sudo touch /etc/vault.d/vault.hcl
 sudo chown --recursive vault:vault /etc/vault.d
 sudo chmod 640 /etc/vault.d/vault.hcl
-# sudo mkdir /opt/raft
-# sudo chown -R vault:vault /opt/raft
+
 
 sudo mkdir --parents /opt/vault/tls
-sudo echo "${cert}" > /opt/vault/tls/vault-cert.pem
-sudo echo "${key}" > /opt/vault/tls/vault-key.pem
-sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
-sudo echo "${license}" > /opt/vault/license.hclic
-
+sudo touch /opt/vault/tls/vault-cert.pem
+/opt/vault/tls/vault-key.pem
+/opt/vault/tls/vault-ca.pem
+/opt/vault/license.hclic
 sudo chown root:root /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
 sudo chown root:vault /opt/vault/tls/vault-key.pem
 sudo chmod 0644 /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
@@ -56,32 +49,11 @@ sudo chmod 0640 /opt/vault/tls/vault-key.pem
 
 sudo chown root:vault /opt/vault/vault.hclic
 sudo chmod 0640 /opt/vault/vault.hclic
-# sudo cat << EOF > /etc/vault.d/vault.hcl
-# listener "tcp" {
-#   address       = "0.0.0.0:8200"
-#   tls_cert_file = "/etc/ssl/certs/fullchain.crt"
-#   tls_key_file  = "/etc/ssl/certs/privkey.key"
-#   tls_client_ca_file = "/etc/ssl/certs/ca.crt"
-# }
-# storage "raft" {
-#   path = "/opt/raft"
-#   node_id = "${raft_node}"
-#    retry_join {
-#     auto_join = "provider=aws addr_type=public_v4 region=eu-central-1 tag_key=project tag_value=vault"
-#     auto_join_scheme        = "https"
-#     leader_tls_servername = "vault-raft.eu-central-1.compute.internal"
-#   }
-# }
-# seal "awskms" {
-#   region     = "eu-central-1"
-#   kms_key_id = "${kms_key_id}"
-# }
-# disable_mlock = true
-# license_path = "/etc/vault.d/license.hclic"
-# api_addr = "https://$${PUBLIC_HOSTNAME}:8200"
-# cluster_addr = "https://$${HOSTNAME}:8201"
-# ui = true 
-# EOF
+
+sudo echo "${cert}" > /opt/vault/tls/vault-cert.pem
+sudo echo "${key}" > /opt/vault/tls/vault-key.pem
+sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
+sudo echo "${license}" > /opt/vault/license.hclic
 
 
 sudo cat << EOF > /etc/vault.d/vault.hcl
