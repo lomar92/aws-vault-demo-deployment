@@ -48,9 +48,9 @@ sudo chown -R vault:vault /opt/raft
 sudo cat << EOF > /etc/vault.d/vault.hcl
 listener "tcp" {
   address       = "0.0.0.0:8200"
-  tls_cert_file = "/etc/ssl/certs/fullchain.crt"
-  tls_key_file  = "/etc/ssl/certs/privkey.key"
-  tls_client_ca_file = "/etc/ssl/certs/ca.crt"
+  tls_cert_file = "/opt/vault/tls/vault-cert.pem"
+  tls_key_file  = "/opt/vault/tls/vault-key.pem"
+  tls_client_ca_file = "/opt/vault/tls/vault-ca.pem"
 }
 storage "raft" {
   path = "/opt/raft"
@@ -60,7 +60,7 @@ storage "raft" {
     auto_join_scheme        = "https"
     leader_tls_servername = "vault-raft.eu-central-1.compute.internal"
     leader_ca_cert_file     = "/opt/vault/tls/vault-ca.pem"
-    leader_client_cert_file = "/opt/vault/tls/vault-ca.pem"
+    leader_client_cert_file = "/opt/vault/tls/vault-cert.pem"
     leader_client_key_file  = "/opt/vault/tls/vault-key.pem"
   }
 }
