@@ -74,9 +74,7 @@ storage "raft" {
     auto_join = "provider=aws addr_type=public_v4 region=eu-central-1 tag_key=project tag_value=vault"
     auto_join_scheme        = "https"
     leader_tls_servername   = "vault-raft.eu-central-1.compute.internal"
-    leader_ca_cert_file     = "/opt/vault/tls/vault-ca.pem"
-    leader_client_cert_file = "/opt/vault/tls/vault-cert.pem"
-    leader_client_key_file  = "/opt/vault/tls/vault-key.pem"
+
   }
 }
 seal "awskms" {
@@ -135,11 +133,10 @@ export VAULT_SKIP_VERIFY=true
 EOF
 
 
-# sudo systemctl enable vault
-# sudo systemctl start vault
+sudo systemctl enable vault
+sudo systemctl start vault
 
-sudo systemctl enable vault.service
-sudo systemctl start vault.service
+
 
 sleep 60
 
