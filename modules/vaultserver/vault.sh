@@ -82,7 +82,7 @@ seal "awskms" {
   region     = "eu-central-1"
   kms_key_id = "${kms_key_id}"
 }
-license_path = "/opt/vault/vault.hclic"
+license_path = "/opt/vault/license.hclic"
 ui = true 
 EOF
 
@@ -127,19 +127,21 @@ EOF
 
 
 
-sudo cat << EOF > /etc/profile.d/vault.sh
-export VAULT_ADDR=https://127.0.0.1:8200
-export VAULT_SKIP_VERIFY=true
-EOF
+# sudo cat << EOF > /etc/profile.d/vault.sh
+# export VAULT_ADDR=https://127.0.0.1:8200
+# export VAULT_SKIP_VERIFY=true
+# EOF
 
 
-sudo systemctl enable vault
-sudo systemctl start vault
+# sudo systemctl enable vault
+# sudo systemctl start vault
+sudo systemctl enable vault.service
+sudo systemctl start vault.service
 
 sleep 60
 
 export VAULT_CACERT=/opt/vault/tls/vault-ca.pem
-export VAULT_ADDR=https://127.0.0.1:8200
+# export VAULT_ADDR=https://127.0.0.1:8200
 vault operator init -format=json > /etc/vault.d/vault.txt
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 
