@@ -61,8 +61,8 @@ sudo echo "${key}" > /etc/ssl/certs/privkey.key
 sudo echo "${ca_cert}" > /etc/ssl/certs/ca.crt
 
 sudo cat << EOF > /etc/vault.d/vault.hcl
-api_addr = "https://$${PRIVATE_IP}:8200"
-cluster_addr = "https://$${PRIVATE_IP}:8201"
+api_addr = "https://$${PUBLIC_HOSTNAME}:8200"
+cluster_addr = "https://$${HOSTNAME}:8201"
 disable_mlock = true
 listener "tcp" {
   address       = "0.0.0.0:8200"
