@@ -56,6 +56,9 @@ sudo echo "${key}" > /opt/vault/tls/vault-key.pem
 sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
 sudo echo "${license}" > /opt/vault/vault.hclic
 
+sudo echo "${cert}" > /etc/ssl/certs/fullchain.crt
+sudo echo "${key}" > /etc/ssl/certs/privkey.key
+sudo echo "${ca_cert}" > /etc/ssl/certs/ca.crt
 
 sudo cat << EOF > /etc/vault.d/vault.hcl
 api_addr = "https://$${PRIVATE_IP}:8200"
@@ -63,9 +66,9 @@ cluster_addr = "https://$${PRIVATE_IP}:8201"
 disable_mlock = true
 listener "tcp" {
   address       = "0.0.0.0:8200"
-  tls_cert_file = "/opt/vault/tls/vault-cert.pem"
-  tls_key_file  = "/opt/vault/tls/vault-key.pem"
-  tls_client_ca_file = "/opt/vault/tls/vault-ca.pem"
+  tls_cert_file = "/etc/ssl/certs/fullchain.crt"
+  tls_key_file  = "/etc/ssl/certs/privkey.key"
+  tls_client_ca_file = "/etc/ssl/certs/ca.crt"
 }
 storage "raft" {
   path = "/opt/vault/data"
