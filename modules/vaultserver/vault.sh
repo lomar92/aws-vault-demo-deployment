@@ -5,7 +5,7 @@
 # From: https://alestic.com/2010/12/ec2-user-data-output/
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
-PRIVATE_IP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+# PRIVATE_IP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
 # PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
 HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/local-hostname)
 PUBLIC_HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
@@ -31,39 +31,18 @@ sudo setcap cap_ipc_lock=+ep /usr/local/bin/vault
 sudo useradd --system --home /etc/vault.d --shell /bin/false vault
 
 sudo mkdir --parents /etc/vault.d
+sudo echo "${cert}" > /etc/ssl/certs/fullchain.crt
+sudo echo "${key}" > /etc/ssl/certs/privkey.key
+sudo echo "${ca_cert}" > /etc/ssl/certs/ca.crt
+sudo echo "${license}" > /etc/vault.d/license.hclic
 
 sudo touch /etc/vault.d/vault.hcl
 sudo chown --recursive vault:vault /etc/vault.d
 sudo chmod 640 /etc/vault.d/vault.hcl
-
-
-sudo mkdir --parents /opt/vault/tls
-sudo touch /opt/vault/tls/vault-cert.pem
-sudo touch /opt/vault/tls/vault-key.pem
-sudo touch /opt/vault/tls/vault-ca.pem
-sudo touch /opt/vault/vault.hclic
-
-sudo chown root:root /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
-sudo chown root:vault /opt/vault/tls/vault-key.pem
-sudo chmod 0644 /opt/vault/tls/vault-cert.pem /opt/vault/tls/vault-ca.pem
-sudo chmod 0640 /opt/vault/tls/vault-key.pem
-
-sudo chown root:vault /opt/vault/vault.hclic
-sudo chmod 0640 /opt/vault/vault.hclic
-
-sudo echo "${cert}" > /opt/vault/tls/vault-cert.pem
-sudo echo "${key}" > /opt/vault/tls/vault-key.pem
-sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
-sudo echo "${license}" > /opt/vault/vault.hclic
-
-sudo echo "${cert}" > /etc/ssl/certs/fullchain.crt
-sudo echo "${key}" > /etc/ssl/certs/privkey.key
-sudo echo "${ca_cert}" > /etc/ssl/certs/ca.crt
+sudo mkdir /opt/raft
+sudo chown -R vault:vault /opt/raft
 
 sudo cat << EOF > /etc/vault.d/vault.hcl
-api_addr = "https://$${PUBLIC_HOSTNAME}:8200"
-cluster_addr = "https://$${HOSTNAME}:8201"
-disable_mlock = true
 listener "tcp" {
   address       = "0.0.0.0:8200"
   tls_cert_file = "/etc/ssl/certs/fullchain.crt"
@@ -71,23 +50,23 @@ listener "tcp" {
   tls_client_ca_file = "/etc/ssl/certs/ca.crt"
 }
 storage "raft" {
-  path = "/opt/vault/data"
+  path = "/opt/raft"
   node_id = "${raft_node}"
    retry_join {
     auto_join = "provider=aws addr_type=public_v4 region=eu-central-1 tag_key=project tag_value=vault"
-    auto_join_scheme        = "https"
-    leader_tls_servername   = "vault-raft.eu-central-1.compute.internal"
-
+    leader_tls_servername = "vault-raft.eu-central-1.compute.internal"
   }
 }
 seal "awskms" {
   region     = "eu-central-1"
   kms_key_id = "${kms_key_id}"
 }
-license_path = "/opt/vault/vault.hclic"
+disable_mlock = true
+license_path = "/etc/vault.d/license.hclic"
+api_addr = "https://$${PUBLIC_HOSTNAME}:8200"
+cluster_addr = "https://$${HOSTNAME}:8201"
 ui = true 
 EOF
-
 
 sudo touch /etc/systemd/system/vault.service
 
@@ -100,7 +79,6 @@ After=network-online.target
 ConditionFileNotEmpty=/etc/vault.d/vault.hcl
 StartLimitIntervalSec=60
 StartLimitBurst=3
-
 [Service]
 User=vault
 Group=vault
@@ -122,16 +100,12 @@ RestartSec=5
 TimeoutStopSec=30
 LimitNOFILE=65536
 LimitMEMLOCK=infinity
-
 [Install]
 WantedBy=multi-user.target
 EOF
 
-
-
 sudo cat << EOF > /etc/profile.d/vault.sh
 export VAULT_ADDR=https://127.0.0.1:8200
-export VAULT_CACERT=/opt/vault/tls/vault-ca.pem
 export VAULT_SKIP_VERIFY=true
 EOF
 
@@ -139,11 +113,8 @@ EOF
 sudo systemctl enable vault
 sudo systemctl start vault
 
-
-
 sleep 60
 
-export VAULT_CACERT=/opt/vault/tls/vault-ca.pem
 export VAULT_ADDR=https://127.0.0.1:8200
 vault operator init -format=json > /etc/vault.d/vault.txt
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
@@ -151,4 +122,3 @@ sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 # on your instance run the following commands:
 # VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
 # vault login $VAULT_TOKEN
-# vault operator raft list-peers
