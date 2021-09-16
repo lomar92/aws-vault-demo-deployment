@@ -47,12 +47,14 @@ listener "tcp" {
   address       = "0.0.0.0:8200"
   tls_cert_file = "/etc/ssl/certs/fullchain.crt"
   tls_key_file  = "/etc/ssl/certs/privkey.key"
+  tls_client_ca_file = "/etc/ssl/certs/ca.crt"
 }
 storage "raft" {
   path = "/opt/raft"
   node_id = "${raft_node}"
    retry_join {
     auto_join = "provider=aws addr_type=public_v4 region=eu-central-1 tag_key=project tag_value=vault"
+    auto_join_scheme        = "https"
     leader_tls_servername = "vault-raft.eu-central-1.compute.internal"
   }
 }
