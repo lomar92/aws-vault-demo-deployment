@@ -43,7 +43,7 @@ sudo chmod 640 /etc/vault.d/vault.hcl
 # sudo mkdir /opt/raft
 # sudo chown -R vault:vault /opt/raft
 
-sudo mkdir /opt/vault
+sudo mkdir --parents /opt/vault/tls
 sudo echo "${cert}" > /opt/vault/tls/vault-cert.pem
 sudo echo "${key}" > /opt/vault/tls/vault-key.pem
 sudo echo "${ca_cert}" > /opt/vault/tls/vault-ca.pem
@@ -110,9 +110,7 @@ seal "awskms" {
   region     = "eu-central-1"
   kms_key_id = "${kms_key_id}"
 }
-
 license_path = "/opt/vault/vault.hclic"
-
 ui = true 
 EOF
 
