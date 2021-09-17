@@ -54,7 +54,7 @@ storage "raft" {
   node_id = "${raft_node}"
    retry_join {
     auto_join = "provider=aws addr_type=public_v4 region=eu-central-1 tag_key=project tag_value=vault"
-    leader_tls_servername = "vault-raft.eu-central-1.compute.internal"
+    leader_tls_servername = "${raft_node}.eu-central-1.compute.internal"
   }
 }
 seal "awskms" {
