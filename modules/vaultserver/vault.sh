@@ -53,12 +53,11 @@ storage "raft" {
   path = "/opt/raft"
   node_id = "${raft_node}"
    retry_join {
-    auto_join = "provider=aws addr_type=public_v4 region=eu-central-1 tag_key=project tag_value=vault"
+    auto_join = "provider=aws region=eu-central-1 tag_key=project tag_value=vault"
     leader_tls_servername = "${raft_node}.eu-central-1.compute.internal"
     leader_ca_cert_file     = "/etc/ssl/certs/ca.crt"
     leader_client_cert_file = "/etc/ssl/certs/fullchain.crt"
     leader_client_key_file  = "/etc/ssl/certs/privkey.key"
-
   }
 }
 seal "awskms" {
@@ -116,11 +115,12 @@ EOF
 
 sudo systemctl enable vault
 sudo systemctl start vault
-
+echo "started Vault"
 sleep 60
 
 export VAULT_ADDR=https://127.0.0.1:8200
 vault operator init -format=json > /etc/vault.d/vault.txt
+echo "Vault initialized"
 sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 
 # on your instance run the following commands:
