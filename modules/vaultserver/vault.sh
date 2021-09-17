@@ -54,7 +54,7 @@ storage "raft" {
   node_id = "${raft_node}"
    retry_join {
     auto_join = "provider=aws region=eu-central-1 tag_key=project tag_value=vault"
-    leader_tls_servername = "${raft_node}.eu-central-1.compute.internal"
+    leader_tls_servername = "vault-raft.eu-central-1.compute.amazonaws.com"
     leader_ca_cert_file     = "/etc/ssl/certs/ca.crt"
     leader_client_cert_file = "/etc/ssl/certs/fullchain.crt"
     leader_client_key_file  = "/etc/ssl/certs/privkey.key"
