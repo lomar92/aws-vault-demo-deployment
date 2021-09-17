@@ -11,8 +11,8 @@ resource "tls_cert_request" "vault" {
     organization = "${var.organization}"
   }
   dns_names      = [
-      "vault-raft.eu-central-1.compute.internal",
-    #  "*.eu-central-1.compute.amazonaws.com"
+    #  "vault-raft.eu-central-1.compute.internal",
+      "*.eu-central-1.compute.amazonaws.com"
       ]
   ip_addresses   = [
      "127.0.0.1"
