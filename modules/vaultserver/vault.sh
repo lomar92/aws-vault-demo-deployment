@@ -118,10 +118,10 @@ sudo systemctl start vault
 echo "started Vault"
 sleep 60
 
-# export VAULT_ADDR=https://127.0.0.1:8200
-# vault operator init -format=json > /etc/vault.d/vault.txt
-# echo "Vault initialized"
-# sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
+export VAULT_ADDR=https://127.0.0.1:8200
+vault operator init -format=json > /etc/vault.d/vault.txt
+echo "Vault initialized"
+sudo cat /etc/vault.d/vault.txt | jq -r .root_token > /etc/vault.d/vaulttoken
 
 # on your instance run the following commands:
 # VAULT_TOKEN=$(cat /etc/vault.d/vaulttoken)
