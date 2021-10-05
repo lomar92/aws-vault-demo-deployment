@@ -4,4 +4,4 @@
 
 Add variables as needed (see variables.tf).
 This cluster is intended for demo or educational purposes only.
-
+The Vault needs to be initialized before it can be used.
