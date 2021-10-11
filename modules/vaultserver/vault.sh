@@ -13,11 +13,11 @@ PUBLIC_HOSTNAME=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
 sudo yum install -y yum-utils
 sudo yum install -y jq
 
-curl --remote-name "https://releases.hashicorp.com/vault/1.7.3+ent/vault_1.7.3+ent_linux_amd64.zip"
-curl --remote-name "https://releases.hashicorp.com/vault/1.7.3+ent/vault_1.7.3+ent_SHA256SUMS"
-curl --remote-name "https://releases.hashicorp.com/vault/1.7.3+ent/1.7.3+ent/vault_1.7.3+ent_SHA256SUMS.sig"
+curl --remote-name "https://releases.hashicorp.com/vault/1.8.4+ent.hsm/vault_1.8.4+ent.hsm_linux_amd64.zip"
+curl --remote-name "https://releases.hashicorp.com/vault/1.8.4+ent.hsm/vault_1.8.4+ent.hsm_SHA256SUMS"
+curl --remote-name "https://releases.hashicorp.com/vault/1.8.4+ent.hsm/vault_1.8.4+ent.hsm_SHA256SUMS.sig"
 
-unzip vault_1.7.3+ent_linux_amd64.zip
+unzip vault_1.8.4+ent.hsm_linux_amd64.zip
 
 sudo chown root:root vault
 
