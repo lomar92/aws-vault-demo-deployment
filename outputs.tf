@@ -17,3 +17,15 @@ output "vault_dns" {
 output "vpc_id" {
   value = resource.aws_vpc.vpc.vpc_id
 }
+
+output "subnet1" {
+  value = module.subnet1.subnet_id
+}
+
+output "subnet2" {
+  value = module.subnet2.subnet_id
+}
+
+output "subnet3" {
+  value = module.subnet3.subnet_id
+}
