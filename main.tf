@@ -106,6 +106,12 @@ resource "aws_security_group" "sg_vpc" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port   = 2223
+    to_port     = 2225
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
     ingress {
     from_port = 0
     to_port   = 0
