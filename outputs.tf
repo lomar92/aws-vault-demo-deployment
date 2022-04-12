@@ -10,13 +10,9 @@ output "public_ip3" {
   value = module.server3.public_ip_instance
 }
 
-output "vault_dns" {
-  value = aws_lb.vault-lb.dns_name
-}
-
-output "vpc_id" {
-  value = resource.aws_vpc.vpc.vpc_id
-}
+# output "vault_dns" {
+#   value = aws_lb.vault-lb.dns_name
+# }
 
 output "subnet1" {
   value = module.subnet1.subnet_id
