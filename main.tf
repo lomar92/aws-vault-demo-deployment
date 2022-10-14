@@ -271,25 +271,25 @@ module "server5" {
   account_id        = var.account_id
 }
 
-resource "aws_db_subnet_group" "db-subnetgroup" {
-  name       = "dbsubnetgroup"
-  subnet_ids = [module.subnet1.subnet_id, module.subnet2.subnet_id, module.subnet3.subnet_id]
+# resource "aws_db_subnet_group" "db-subnetgroup" {
+#   name       = "dbsubnetgroup"
+#   subnet_ids = [module.subnet1.subnet_id, module.subnet2.subnet_id, module.subnet3.subnet_id]
 
-  tags = {
-    Name = "Vault DB subnet group"
-  }
-}
+#   tags = {
+#     Name = "Vault DB subnet group"
+#   }
+# }
 
-resource "aws_db_instance" "rds-db" {
-  allocated_storage    = 10
-  db_name              = "vaultdemoinstance"
-  engine               = "mysql"
-  engine_version       = "8.0.28"
-  instance_class       = "db.t3.micro"
-  username             = var.username
-  password             = var.dbpassword
-  db_subnet_group_name = aws_db_subnet_group.db-subnetgroup.name
-  skip_final_snapshot  = true
-  publicly_accessible  = true
-}
+# resource "aws_db_instance" "rds-db" {
+#   allocated_storage    = 10
+#   db_name              = "vaultdemoinstance"
+#   engine               = "mysql"
+#   engine_version       = "8.0.28"
+#   instance_class       = "db.t3.micro"
+#   username             = var.username
+#   password             = var.dbpassword
+#   db_subnet_group_name = aws_db_subnet_group.db-subnetgroup.name
+#   skip_final_snapshot  = true
+#   publicly_accessible  = true
+# }
 
