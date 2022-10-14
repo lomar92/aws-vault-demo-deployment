@@ -64,3 +64,12 @@ variable "organization" {
 variable "account_id" {
   description = "AWS account ID"
 }
+
+variable "username" {
+  default = "admin"
+}
+
+variable "dbpassword" {
+  default = "supergeheim"
+  sensitive = true
+}
