@@ -1,9 +1,9 @@
 output "public_ip_instance" {
-  value = aws_instance.vaultserver[count.index].public_ip
+  value = aws_instance.vaultserver.*.public_ip
 }
 
 output "instance_id" {
-  value = aws_instance.vaultserver[count.index].id
+  value = aws_instance.vaultserver.*.id
 }
 
 output "vault_license" {
@@ -11,9 +11,9 @@ output "vault_license" {
 }
 
 output "public_dns_instance" {
-  value = aws_instance.vaultserver[count.index].public_dns
+  value = aws_instance.vaultserver.*.public_dns
 }
 
 output "private_ip_instance" {
-  value = aws_instance.vaultserver[count.index].private_ip
+  value = aws_instance.vaultserver.*.private_ip
 }
