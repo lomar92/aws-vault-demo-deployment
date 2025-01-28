@@ -49,11 +49,12 @@ resource "aws_route_table" "rtb_public" {
 
   for_each = var.subnet
 
-  vpc         = aws_vpc.vpc.id
-  route_table = aws_route_table.rtb_public.id
-  subnet_name = each.key
-  az          = each.value.az
-  cidr_block  = each.value.cidr_block
+  vpc           = aws_vpc.vpc.id
+  route_table   = aws_route_table.rtb_public.id
+  subnet_name   = each.key
+  subnet_number = each.value.number
+  az            = each.value.az
+  cidr_block    = each.value.cidr_block
 }
 
 
@@ -161,8 +162,8 @@ module "server" {
   
   subnet_id         = module.subnet[each.key].subnet_id
   security_group    = aws_security_group.sg_vpc.id
-  raft_node         = "vault ${length(module.subnet[each.key].subnet_id)}"
-  instance_name     = "vault ${length(module.subnet[each.key].subnet_id)}"
+  raft_node         = "vault${module.subnet[each.key].subnet_number}"
+  instance_name     = "vault${module.subnet[each.key].subnet_number}"
   key               = var.key
   ami               = var.ami
   instance_type     = var.instance_type

@@ -22,3 +22,7 @@ variable "subnet_name" {
     description = "name of the subnet"
     type = string
 }
+
+variable "subnet_number" {
+    description = "number of the subnet"
+}
