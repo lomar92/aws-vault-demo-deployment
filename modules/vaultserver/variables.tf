@@ -8,10 +8,10 @@ variable "instance_type" {
   type = string
 }
 
-variable "instance_name" {
+/* variable "instance_name" {
   description = "Name of the instance"
   type = string
-}
+} */
 
 variable "key" {
   description = "Key for SSHing into EC2 instance"
@@ -83,4 +83,8 @@ variable "cert_pem" {
 
 variable "account_id" {
   description = "AWS account ID"
+}
+
+variable "instance_count" {
+  type = number
 }

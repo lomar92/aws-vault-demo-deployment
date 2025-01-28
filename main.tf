@@ -52,7 +52,7 @@ resource "aws_route_table" "rtb_public" {
   vpc           = aws_vpc.vpc.id
   route_table   = aws_route_table.rtb_public.id
   subnet_name   = each.key
-  subnet_number = each.value.number
+  subnet_count  = each.value.subnet_count
   az            = each.value.az
   cidr_block    = each.value.cidr_block
 }
@@ -157,13 +157,14 @@ resource "tls_self_signed_cert" "ca" {
 
 module "server" {
   source            = "./modules/vaultserver/"
+  depends_on = [module.subnet]
 
   for_each = var.subnet
   
+  instance_count    = each.value.subnet_count
   subnet_id         = module.subnet[each.key].subnet_id
   security_group    = aws_security_group.sg_vpc.id
-  raft_node         = "vault${module.subnet[each.key].subnet_number}"
-  instance_name     = "vault${module.subnet[each.key].subnet_number}"
+  raft_node         = "vault${each.value.subnet_count}"
   key               = var.key
   ami               = var.ami
   instance_type     = var.instance_type

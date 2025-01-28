@@ -14,7 +14,9 @@ data "template_file" "user_data" {
     account_id = "${var.account_id}"
   }
 }
-resource "aws_instance" "vaultserver" {                    
+resource "aws_instance" "vaultserver" {     
+  count = var.instance_count
+
   ami                         = var.ami 
   instance_type               = var.instance_type
   key_name                    = var.key
@@ -30,7 +32,7 @@ resource "aws_instance" "vaultserver" {
     volume_size = var.volume_size
   }
   tags = {
-    Name = var.instance_name
+    Name    = "vault${count.index}"
     project = "vault"
   }
 }

@@ -9,7 +9,7 @@ resource "aws_subnet" "subnet_public" {
   availability_zone = var.az
   tags = {
     name = var.subnet_name
-    subnet-number = var.subnet_number
+    subnet-count = var.subnet_count
   }
 }
 
