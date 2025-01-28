@@ -17,9 +17,22 @@ variable "subnet" {
   }
 }
 
-variable "cidr_subnet" {
-  description = "CIDR block for the subnet"
-  default     = "10.0.1.0/24"
+variable "server" {
+  type = map(any)
+  default = {
+    server1 ={
+      raft_node         = "vault1"
+      instance_name     = "vault1"
+    }
+    server2 ={
+      raft_node         = "vault2"
+      instance_name     = "vault2"
+    }
+    server3 ={
+      raft_node         = "vault3"
+      instance_name     = "vault3"
+    }
+  }
 }
 
 variable "vpc" {

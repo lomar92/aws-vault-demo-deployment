@@ -56,27 +56,6 @@ resource "aws_route_table" "rtb_public" {
   cidr_block  = each.value.cidr_block
 }
 
-/* module "subnet1" {
-  source      = "./modules/subnet/"
-  vpc         = aws_vpc.vpc.id
-  cidr_block  = "10.0.1.0/24"
-  az          = "eu-central-1a"
-  route_table = aws_route_table.rtb_public.id
-}
-module "subnet2" {
-  source      = "./modules/subnet/"
-  vpc         = aws_vpc.vpc.id
-  cidr_block  = "10.0.2.0/24"
-  az          = "eu-central-1b"
-  route_table = aws_route_table.rtb_public.id
-}
-module "subnet3" {
-  source      = "./modules/subnet/"
-  vpc         = aws_vpc.vpc.id
-  cidr_block  = "10.0.3.0/24"
-  az          = "eu-central-1c"
-  route_table = aws_route_table.rtb_public.id
-} */
 
 resource "aws_security_group" "sg_vpc" {
   name   = "sg_vpc"
@@ -171,6 +150,31 @@ resource "tls_self_signed_cert" "ca" {
     common_name  = "${var.common_name}"
     organization = "${var.organization}"
   }
+}
+
+module "server" {
+  source            = "./modules/vaultserver/"
+
+  for_each = var.server  
+
+  subnet_id         = module.subnet[each.key].subnet_id
+  security_group    = aws_security_group.sg_vpc.id
+  raft_node         = each.value.raft_node
+  instance_name     = each.value.instance_name
+  key               = var.key
+  ami               = var.ami
+  instance_type     = var.instance_type
+  iam_profile       = aws_iam_instance_profile.vault-server.id
+  device_name       = var.device_name
+  volume_type       = var.volume_type
+  volume_size       = var.volume_size
+  VAULT_LICENSE     = var.VAULT_LICENSE
+  algorithm         = tls_private_key.ca.algorithm
+  private_key_pem   = tls_private_key.ca.private_key_pem
+  cert_pem          = tls_self_signed_cert.ca.cert_pem
+  kms               = aws_kms_key.kms_key_vault.key_id
+  organization      = var.organization
+  account_id        = var.account_id
 }
 
 /* module "server1" {

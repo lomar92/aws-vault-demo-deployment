@@ -14,15 +14,4 @@ output "public_ip3" {
 #   value = aws_lb.vault-lb.dns_name
 # }
 
-/* output "subnet1" {
-  value = module.subnet.subnet_id
-  }
-
-output "subnet2" {
-  value = module.subnet.subnet_id
-}
-
-output "subnet3" {
-  value = module.subnet.subnet_id
-} */
 
