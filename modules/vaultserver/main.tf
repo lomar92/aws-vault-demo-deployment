@@ -32,7 +32,7 @@ resource "aws_instance" "vaultserver" {
     volume_size = var.volume_size
   }
   tags = {
-    Name    = "vault${count.index}"
+    Name    = "vault${count.index}${var.subnet_id}"
     project = "vault"
   }
 }
