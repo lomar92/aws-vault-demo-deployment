@@ -87,4 +87,5 @@ variable "account_id" {
 
 variable "instance_count" {
   type = number
+  default = 3
 }

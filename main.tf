@@ -161,7 +161,6 @@ module "server" {
 
   for_each = var.subnet
   
-  instance_count    = each.value.subnet_count
   subnet_id         = module.subnet[each.key].subnet_id
   security_group    = aws_security_group.sg_vpc.id
   raft_node         = "vault${each.value.subnet_count}"
