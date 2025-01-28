@@ -154,13 +154,12 @@ resource "tls_self_signed_cert" "ca" {
 
 module "server" {
   source            = "./modules/vaultserver/"
-
-  for_each = var.server  
-
-  subnet_id         = module.subnet[each.key[*]].subnet_id
+  count = 3
+  
+  subnet_id         = module.subnet[each.key].subnet_id
   security_group    = aws_security_group.sg_vpc.id
-  raft_node         = each.value.raft_node
-  instance_name     = each.value.instance_name
+  raft_node         = "vault ${count.index}"
+  instance_name     = "vault ${count.index}"
   key               = var.key
   ami               = var.ami
   instance_type     = var.instance_type
