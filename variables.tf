@@ -1,8 +1,22 @@
-variable "availability_zone" {
-  description = "az into which instance is deployed"
-  type = string
-  default = "eu-central-1a"
+variable "subnet" {
+  description = "subnet into which instance is deployed"
+  type = map(any)
+  default = {
+    subnet1 = {
+      az          = "eu-central-1a"
+      cidr_block  = "10.0.1.0/24"
+    }
+    subnet2 = {
+      az          = "eu-central-1b"
+      cidr_block  = "10.0.2.0/24"
+    }
+    subnet3 = {
+      az          = "eu-central-1c"
+      cidr_block  = "10.0.3.0/24"
+    }
+  }
 }
+
 variable "cidr_subnet" {
   description = "CIDR block for the subnet"
   default     = "10.0.1.0/24"

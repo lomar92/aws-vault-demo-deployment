@@ -44,7 +44,16 @@ resource "aws_route_table" "rtb_public" {
   } 
 }
 
-module "subnet1" {
+ module "subnet" {
+  source      = "./modules/subnet/"
+
+  for_each = var.subnet
+
+  vpc         = aws_vpc.vpc.id
+  route_table = aws_route_table.rtb_public.id
+}
+
+/* module "subnet1" {
   source      = "./modules/subnet/"
   vpc         = aws_vpc.vpc.id
   cidr_block  = "10.0.1.0/24"
@@ -64,7 +73,7 @@ module "subnet3" {
   cidr_block  = "10.0.3.0/24"
   az          = "eu-central-1c"
   route_table = aws_route_table.rtb_public.id
-}
+} */
 
 resource "aws_security_group" "sg_vpc" {
   name   = "sg_vpc"
@@ -161,7 +170,7 @@ resource "tls_self_signed_cert" "ca" {
   }
 }
 
-module "server1" {
+/* module "server1" {
   subnet_id         = module.subnet1.subnet_id
   security_group    = aws_security_group.sg_vpc.id
   source            = "./modules/vaultserver/"
@@ -269,7 +278,7 @@ module "server5" {
   kms               = aws_kms_key.kms_key_vault.key_id
   organization      = var.organization
   account_id        = var.account_id
-}
+} */
 
 # resource "aws_db_subnet_group" "db-subnetgroup" {
 #   name       = "dbsubnetgroup"
