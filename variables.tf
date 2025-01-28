@@ -17,7 +17,7 @@ variable "subnet" {
   }
 }
 
-variable "server" {
+/* variable "server" {
   type = map(any)
   default = {
     server1 ={
@@ -34,7 +34,7 @@ variable "server" {
     }
   }
 }
-
+ */
 variable "vpc" {
   description = "VPC to deploy all Resources into."
   default = ""

@@ -156,7 +156,7 @@ module "server" {
   source            = "./modules/vaultserver/"
   count = 3
   
-  subnet_id         = module.subnet[each.key].subnet_id
+  subnet_id         = module.subnet.subnet_id[count.index]
   security_group    = aws_security_group.sg_vpc.id
   raft_node         = "vault ${count.index}"
   instance_name     = "vault ${count.index}"
