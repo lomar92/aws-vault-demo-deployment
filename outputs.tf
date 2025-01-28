@@ -27,5 +27,5 @@ output "subnet3" {
 } */
 
 output "subnet" {
-  value = { for p in sort(keys(var.subnet)) : p => module.subnet[p].subnet_name }
+  value = { for p in sort(keys(var.subnet)) : p => module.subnet[p].tags.Name }
 }
