@@ -14,14 +14,18 @@ output "public_ip3" {
 #   value = aws_lb.vault-lb.dns_name
 # }
 
-output "subnet1" {
-  value = module.subnet1.subnet_id
-}
+/* output "subnet1" {
+  value = module.subnet.subnet_id
+  }
 
 output "subnet2" {
-  value = module.subnet2.subnet_id
+  value = module.subnet.subnet_id
 }
 
 output "subnet3" {
-  value = module.subnet3.subnet_id
+  value = module.subnet.subnet_id
+} */
+
+output "subnet" {
+  value = { for p in sort(keys(var.subnet)) : p => module.subnet[p].subnet_name }
 }
