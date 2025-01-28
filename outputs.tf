@@ -26,6 +26,3 @@ output "subnet3" {
   value = module.subnet.subnet_id
 } */
 
-output "subnet" {
-  value = { for p in sort(keys(var.subnet)) : p => module.subnet[p].tags.Name }
-}
