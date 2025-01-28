@@ -51,6 +51,7 @@ resource "aws_route_table" "rtb_public" {
 
   vpc         = aws_vpc.vpc.id
   route_table = aws_route_table.rtb_public.id
+  subnet_name = each.key
 }
 
 /* module "subnet1" {

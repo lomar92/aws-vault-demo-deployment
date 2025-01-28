@@ -8,7 +8,7 @@ resource "aws_subnet" "subnet_public" {
   cidr_block = var.cidr_block
   availability_zone = var.az
   tags = {
-    Name = "Vaultsubnet"
+    Name = var.subnet_name
   }
 }
 
