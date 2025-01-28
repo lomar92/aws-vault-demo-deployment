@@ -157,7 +157,7 @@ module "server" {
 
   for_each = var.server  
 
-  subnet_id         = module.subnet[each.key].subnet_id[*]
+  subnet_id         = module.subnet[each.key.value].subnet_id
   security_group    = aws_security_group.sg_vpc.id
   raft_node         = each.value.raft_node
   instance_name     = each.value.instance_name
