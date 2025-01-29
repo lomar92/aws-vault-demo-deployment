@@ -2,10 +2,6 @@ terraform {
   required_version = ">= 1.0.0"
   }
 
-/* resource "random_id" "raft_node" {
-  byte_length = 1
-} */
-# raft_node  = "vault-${random_id.raft_node.id}"
 
 data "template_file" "user_data" {
   template = file("${path.module}/vault.sh")
@@ -14,7 +10,7 @@ data "template_file" "user_data" {
     cert       = "${tls_locally_signed_cert.vault.cert_pem}"
     key        = "${tls_private_key.vault.private_key_pem}"
     ca_cert    = "${var.cert_pem}"
-    raft_node  = "${var.server_name}"
+    raft_node  = "${var.instance_name}"
     kms_key_id = "${var.kms}"
     account_id = "${var.account_id}"
   }
@@ -22,8 +18,6 @@ data "template_file" "user_data" {
 
 
 resource "aws_instance" "vaultserver" {     
-#  count = var.instance_count
-
   ami                         = var.ami 
   instance_type               = var.instance_type
   key_name                    = var.key
@@ -39,7 +33,7 @@ resource "aws_instance" "vaultserver" {
     volume_size = var.volume_size
   }
   tags = {
-    Name    = "${var.server_name}"
+    Name    = "${var.instance_name}"
     project = "vault"
   }
 }

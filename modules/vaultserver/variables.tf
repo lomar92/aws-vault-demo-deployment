@@ -8,10 +8,9 @@ variable "instance_type" {
   type = string
 }
 
-/* variable "instance_name" {
+variable "instance_name" {
   description = "Name of the instance"
-  type = string
-} */
+}
 
 variable "key" {
   description = "Key for SSHing into EC2 instance"
@@ -56,10 +55,6 @@ variable "organization" {
   type = string
 } 
 
-/* variable "raft_node" {
-  description = "Node number in Raft cluster"
-}   */
-
 variable "VAULT_LICENSE" {
   default = "standard"
 }
@@ -85,11 +80,5 @@ variable "account_id" {
   description = "AWS account ID"
 }
 
-variable "instance_count" {
-  type = number
-  default = 2
-}
 
-variable "server_name" {
-  description = "servername"
-}
+

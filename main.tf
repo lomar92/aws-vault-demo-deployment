@@ -10,10 +10,6 @@ terraform {
       source = "hashicorp/tls"
       version = "3.1.0"
     }
-    random = {
-      source = "hashicorp/random"
-      version = "3.6.3"
-    }
   }
 }
 provider "aws" {
@@ -34,7 +30,7 @@ module "server" {
     node6 = "2"
   })
   
-  server_name       = each.key
+  instance_name     = each.key
   subnet_id         = aws_subnet.subnet_public[each.value].id
   security_group    = aws_security_group.sg_vpc.id
   key               = var.key

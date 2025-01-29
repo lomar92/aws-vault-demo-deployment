@@ -10,8 +10,9 @@ output "public_ip3" {
   value = module.server3.public_ip_instance
 } */
 
-# output "vault_dns" {
-#   value = aws_lb.vault-lb.dns_name
-# }
 
-
+output "public_ips" {
+  value = {
+    for k in module.server : k => module.server[k].public_ip_instance
+  }
+}
