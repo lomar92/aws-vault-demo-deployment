@@ -20,35 +20,21 @@ provider "aws" {
   region = var.region
 }
 
-resource "tls_private_key" "ca" {
-  algorithm   = "ECDSA"
-  ecdsa_curve = "P384"
-}
 
-resource "tls_self_signed_cert" "ca" {
-  key_algorithm     = "${tls_private_key.ca.algorithm}"
-  private_key_pem   = "${tls_private_key.ca.private_key_pem}"
-  is_ca_certificate = true
 
-  validity_period_hours = 12
-  allowed_uses = [
-    "key_encipherment",
-    "digital_signature",
-    "cert_signing",
-    "server_auth",
-  ]
-  subject {
-    common_name  = "${var.common_name}"
-    organization = "${var.organization}"
-  }
-}
-
-/* module "server" {
+module "server" {
   source            = "./modules/vaultserver/"
 
-#  for_each = var.subnet
+  for_each = tomap({
+    node1 = "0"
+    node2 = "0"
+    node3 = "1"
+    node4 = "1"
+    node5 = "2"
+    node6 = "2"
+  })
   
-  subnet_id         = module.subnet[each.key].subnet_id
+  subnet_id         = aws_subnet.subnet_public[each.value].id
   security_group    = aws_security_group.sg_vpc.id
   key               = var.key
   ami               = var.ami
@@ -66,4 +52,3 @@ resource "tls_self_signed_cert" "ca" {
   account_id        = var.account_id
 }
 
- */

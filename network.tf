@@ -31,34 +31,11 @@ data "aws_availability_zones" "available" {
 }
 
 resource "aws_subnet" "subnet_public" {
-  count = 3
+  count             = 3
   vpc_id            = aws_vpc.vpc.id
   availability_zone = data.aws_availability_zones.available.names[count.index]
   cidr_block        = var.cidr_block[count.index]
-
 }
-
-/* resource "aws_subnet" "subnet_public" {
-  for_each = toset ([data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[2]])
-  vpc_id            = aws_vpc.vpc.id
-  availability_zone = each.key
-  cidr_block        = var.cidr_block
-} */
-
-/* resource "aws_subnet" "subnet_public1" {
-  vpc_id     = aws_vpc.vpc.id
-  availability_zone = data.aws_availability_zones.available.names[0]
-}
-
-resource "aws_subnet" "subnet_public2" {
-  vpc_id     = aws_vpc.vpc.id
-  availability_zone = data.aws_availability_zones.available.names[1]
-}
-
-resource "aws_subnet" "subnet_public3" {
-  vpc_id     = aws_vpc.vpc.id
-  availability_zone = data.aws_availability_zones.available.names[2]
-} */
 
 resource "aws_security_group" "sg_vpc" {
   name   = "sg_vpc"

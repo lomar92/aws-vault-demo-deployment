@@ -1,19 +1,30 @@
-/* variable "subnet" {
-  description = "subnet into which instance is deployed"
-  type = map(any)
+/* variable "node" {
+  type = map()
   default = {
-    subnet1 = {
-      az          = "eu-central-1a"
-      cidr_block  = "10.0.1.0/24"
-    }
-    subnet2 = {
-      az          = "eu-central-1b"
-      cidr_block  = "10.0.2.0/24"
-    }
-    subnet3 = {
-      az          = "eu-central-1c"
-      cidr_block  = "10.0.3.0/24"
-    }
+    node1 = {
+      subnet  = aws_subnet.subnet_public[0].id,
+      
+    },
+    node2 = {
+      subnet  = aws_subnet.subnet_public[0].id,
+      
+    },
+    node3 = {
+      subnet  = aws_subnet.subnet_public[1].id,
+      
+    },
+    node4 = {
+      subnet  = aws_subnet.subnet_public[1].id,
+      
+    },
+    node5 = {
+      subnet  = aws_subnet.subnet_public[2].id,
+      
+    },
+    node6 = {
+      subnet  = aws_subnet.subnet_public[2].id,
+      
+    },
   }
 }
  */

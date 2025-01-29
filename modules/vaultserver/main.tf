@@ -21,7 +21,7 @@ data "template_file" "user_data" {
 
 
 resource "aws_instance" "vaultserver" {     
-  count = var.instance_count
+#  count = var.instance_count
 
   ami                         = var.ami 
   instance_type               = var.instance_type
@@ -38,7 +38,7 @@ resource "aws_instance" "vaultserver" {
     volume_size = var.volume_size
   }
   tags = {
-    Name    = "vault${count.index}-${var.subnet_id}"
+    Name    = "vault-${var.subnet_id}"
     project = "vault"
   }
 }
