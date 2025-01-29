@@ -35,6 +35,10 @@ resource "aws_subnet" "subnet_public" {
   vpc_id            = aws_vpc.vpc.id
   availability_zone = data.aws_availability_zones.available.names[count.index]
   cidr_block        = var.cidr_block[count.index]
+
+  tags = {
+    Name = "subnet ${count.index}"
+  }
 }
 
 resource "aws_subnet" "subnet_public" {
