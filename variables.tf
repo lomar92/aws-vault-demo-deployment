@@ -17,27 +17,8 @@ variable "subnet" {
   }
 }
 
-/* variable "server" {
-  type = map(any)
-  default = {
-    server1 ={
-      raft_node         = "vault1"
-      instance_name     = "vault1"
-    }
-    server2 ={
-      raft_node         = "vault2"
-      instance_name     = "vault2"
-    }
-    server3 ={
-      raft_node         = "vault3"
-      instance_name     = "vault3"
-    }
-  }
-}
- */
-variable "vpc" {
-  description = "VPC to deploy all Resources into."
-  default = ""
+variable "region" {
+  default = "eu-central-1"
 }
 
 variable "ami" {

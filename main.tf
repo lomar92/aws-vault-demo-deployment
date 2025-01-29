@@ -17,7 +17,7 @@ terraform {
   }
 }
 provider "aws" {
-  region = "eu-central-1"
+  region = var.region
 }
 
 resource "aws_vpc" "vpc" {
@@ -127,8 +127,6 @@ resource "aws_security_group" "sg_vpc" {
   }
 }
 
-
-
 resource "aws_kms_key" "kms_key_vault" {
  description             = "Vault KMS key"
 }
@@ -157,11 +155,6 @@ resource "tls_self_signed_cert" "ca" {
 }
 
 
-# naming of raft node needs to be reworked, maybe with random or length?
-
-
-
-
 module "server" {
   source            = "./modules/vaultserver/"
   depends_on        = [module.subnet]
@@ -186,136 +179,5 @@ module "server" {
   account_id        = var.account_id
 }
 
-# raft_node         = "vault${each.value.subnet_count}"
-/* module "server1" {
-  subnet_id         = module.subnet1.subnet_id
-  security_group    = aws_security_group.sg_vpc.id
-  source            = "./modules/vaultserver/"
-  raft_node         = "vault1"
-  key               = var.key
-  ami               = var.ami
-  instance_type     = var.instance_type
-  iam_profile       = aws_iam_instance_profile.vault-server.id
-  device_name       = var.device_name
-  volume_type       = var.volume_type
-  volume_size       = var.volume_size
-  instance_name     = "vault1"
-  VAULT_LICENSE     = var.VAULT_LICENSE
-  algorithm         = tls_private_key.ca.algorithm
-  private_key_pem   = tls_private_key.ca.private_key_pem
-  cert_pem          = tls_self_signed_cert.ca.cert_pem
-  kms               = aws_kms_key.kms_key_vault.key_id
-  organization      = var.organization
-  account_id        = var.account_id
-}
 
-module "server2" {
-  subnet_id         = module.subnet2.subnet_id
-  security_group    = aws_security_group.sg_vpc.id
-  source            = "./modules/vaultserver/"
-  raft_node         = "vault2"
-  key               = var.key
-  ami               = var.ami
-  instance_type     = var.instance_type
-  iam_profile       = aws_iam_instance_profile.vault-server.id
-  device_name       = var.device_name
-  volume_type       = var.volume_type
-  volume_size       = var.volume_size
-  instance_name     = "vault2"
-  VAULT_LICENSE     = var.VAULT_LICENSE 
-  algorithm         = tls_private_key.ca.algorithm
-  private_key_pem   = tls_private_key.ca.private_key_pem
-  cert_pem          = tls_self_signed_cert.ca.cert_pem
-  kms               = aws_kms_key.kms_key_vault.key_id
-  organization      = var.organization
-  account_id        = var.account_id
-}
-
-module "server3" {
-  subnet_id         = module.subnet3.subnet_id
-  security_group    = aws_security_group.sg_vpc.id
-  source            = "./modules/vaultserver/"
-  raft_node         = "vault3"
-  key               = var.key
-  ami               = var.ami
-  instance_type     = var.instance_type
-  iam_profile       = aws_iam_instance_profile.vault-server.id
-  device_name       = var.device_name
-  volume_type       = var.volume_type
-  volume_size       = var.volume_size
-  instance_name     = "vault3"
-  VAULT_LICENSE     = var.VAULT_LICENSE
-  algorithm         = tls_private_key.ca.algorithm
-  private_key_pem   = tls_private_key.ca.private_key_pem
-  cert_pem          = tls_self_signed_cert.ca.cert_pem
-  kms               = aws_kms_key.kms_key_vault.key_id
-  organization      = var.organization
-  account_id        = var.account_id
-}
-
-module "server4" {
-  subnet_id         = module.subnet2.subnet_id
-  security_group    = aws_security_group.sg_vpc.id
-  source            = "./modules/vaultserver/"
-  raft_node         = "vault4"
-  key               = var.key
-  ami               = var.ami
-  instance_type     = var.instance_type
-  iam_profile       = aws_iam_instance_profile.vault-server.id
-  device_name       = var.device_name
-  volume_type       = var.volume_type
-  volume_size       = var.volume_size
-  instance_name     = "vault4"
-  VAULT_LICENSE     = var.VAULT_LICENSE
-  algorithm         = tls_private_key.ca.algorithm
-  private_key_pem   = tls_private_key.ca.private_key_pem
-  cert_pem          = tls_self_signed_cert.ca.cert_pem
-  kms               = aws_kms_key.kms_key_vault.key_id
-  organization      = var.organization
-  account_id        = var.account_id
-}
-
-module "server5" {
-  subnet_id         = module.subnet3.subnet_id
-  security_group    = aws_security_group.sg_vpc.id
-  source            = "./modules/vaultserver/"
-  raft_node         = "vault5"
-  key               = var.key
-  ami               = var.ami
-  instance_type     = var.instance_type
-  iam_profile       = aws_iam_instance_profile.vault-server.id
-  device_name       = var.device_name
-  volume_type       = var.volume_type
-  volume_size       = var.volume_size
-  instance_name     = "vault5"
-  VAULT_LICENSE     = var.VAULT_LICENSE
-  algorithm         = tls_private_key.ca.algorithm
-  private_key_pem   = tls_private_key.ca.private_key_pem
-  cert_pem          = tls_self_signed_cert.ca.cert_pem
-  kms               = aws_kms_key.kms_key_vault.key_id
-  organization      = var.organization
-  account_id        = var.account_id
-} */
-
-# resource "aws_db_subnet_group" "db-subnetgroup" {
-#   name       = "dbsubnetgroup"
-#   subnet_ids = [module.subnet1.subnet_id, module.subnet2.subnet_id, module.subnet3.subnet_id]
-
-#   tags = {
-#     Name = "Vault DB subnet group"
-#   }
-# }
-
-# resource "aws_db_instance" "rds-db" {
-#   allocated_storage    = 10
-#   db_name              = "vaultdemoinstance"
-#   engine               = "mysql"
-#   engine_version       = "8.0.28"
-#   instance_class       = "db.t3.micro"
-#   username             = var.username
-#   password             = var.dbpassword
-#   db_subnet_group_name = aws_db_subnet_group.db-subnetgroup.name
-#   skip_final_snapshot  = true
-#   publicly_accessible  = true
-# }
 
