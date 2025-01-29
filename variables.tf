@@ -1,34 +1,3 @@
-/* variable "node" {
-  type = map()
-  default = {
-    node1 = {
-      subnet  = aws_subnet.subnet_public[0].id,
-      
-    },
-    node2 = {
-      subnet  = aws_subnet.subnet_public[0].id,
-      
-    },
-    node3 = {
-      subnet  = aws_subnet.subnet_public[1].id,
-      
-    },
-    node4 = {
-      subnet  = aws_subnet.subnet_public[1].id,
-      
-    },
-    node5 = {
-      subnet  = aws_subnet.subnet_public[2].id,
-      
-    },
-    node6 = {
-      subnet  = aws_subnet.subnet_public[2].id,
-      
-    },
-  }
-}
- */
-
 variable "cidr_block" {
   type = list(string)
   default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
@@ -90,11 +59,3 @@ variable "account_id" {
   description = "AWS account ID"
 }
 
-variable "username" {
-  default = "admin"
-}
-
-variable "dbpassword" {
-  default = "supergeheim"
-  sensitive = true
-}
