@@ -34,7 +34,7 @@ resource "aws_subnet" "subnet_public" {
   for_each = toset ([data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[2]])
   vpc_id            = aws_vpc.vpc.id
   availability_zone = each.key
-  cidr_block        = slice(var.cidr_block, 0, 2)
+  cidr_block        = var.cidr_block
 }
 
 /* resource "aws_subnet" "subnet_public1" {
