@@ -23,6 +23,6 @@ variable "subnet_name" {
     type = string
 }
 
-variable "subnet_count" {
+/* variable "subnet_count" {
     description = "number of subnets in vpc"
-}
+} */

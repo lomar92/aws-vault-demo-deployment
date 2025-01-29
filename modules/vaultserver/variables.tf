@@ -56,9 +56,9 @@ variable "organization" {
   type = string
 } 
 
-variable "raft_node" {
+/* variable "raft_node" {
   description = "Node number in Raft cluster"
-}  
+}   */
 
 variable "VAULT_LICENSE" {
   default = "standard"

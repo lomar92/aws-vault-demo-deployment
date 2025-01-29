@@ -2,14 +2,13 @@ terraform {
   required_version = ">= 1.0.0"
   }
 
-
+# az with data source and index?
 resource "aws_subnet" "subnet_public" {
   vpc_id     = var.vpc
   cidr_block = var.cidr_block
   availability_zone = var.az
   tags = {
     name = var.subnet_name
-    subnet-count = var.subnet_count
   }
 }
 
