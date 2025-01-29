@@ -1,4 +1,4 @@
-terraform {
+/* terraform {
   required_version = ">= 1.0.0"
   }
 
@@ -16,4 +16,4 @@ resource "aws_subnet" "subnet_public" {
 resource "aws_route_table_association" "rtb_subnet_public" {
   subnet_id      = aws_subnet.subnet_public.id
   route_table_id = var.route_table
-}
+} */

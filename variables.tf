@@ -1,4 +1,4 @@
-variable "subnet" {
+/* variable "subnet" {
   description = "subnet into which instance is deployed"
   type = map(any)
   default = {
@@ -16,6 +16,9 @@ variable "subnet" {
     }
   }
 }
+ */
+
+
 
 variable "region" {
   default = "eu-central-1"
