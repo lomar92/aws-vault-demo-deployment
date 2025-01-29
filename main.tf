@@ -34,6 +34,7 @@ module "server" {
     node6 = "2"
   })
   
+  server_name       = each.key
   subnet_id         = aws_subnet.subnet_public[each.value].id
   security_group    = aws_security_group.sg_vpc.id
   key               = var.key
