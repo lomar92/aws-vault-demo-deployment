@@ -13,7 +13,7 @@ data "template_file" "user_data" {
     cert       = "${tls_locally_signed_cert.vault.cert_pem}"
     key        = "${tls_private_key.vault.private_key_pem}"
     ca_cert    = "${var.cert_pem}"
-    raft_node  = "vault-${tostring(random_id.raft_node)}"
+    raft_node  = "vault-${random_id.raft_node.id}"
     kms_key_id = "${var.kms}"
     account_id = "${var.account_id}"
   }
