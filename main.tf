@@ -20,7 +20,7 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_vpc" "vpc" {
+/* resource "aws_vpc" "vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -48,7 +48,12 @@ resource "aws_route_table" "rtb_public" {
   } 
 }
 
- module "subnet" {
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+
+module "subnet" {
   source      = "./modules/subnet/"
 
   for_each = var.subnet
@@ -129,7 +134,7 @@ resource "aws_security_group" "sg_vpc" {
 
 resource "aws_kms_key" "kms_key_vault" {
  description             = "Vault KMS key"
-}
+} */
 
 resource "tls_private_key" "ca" {
   algorithm   = "ECDSA"
@@ -155,7 +160,7 @@ resource "tls_self_signed_cert" "ca" {
 }
 
 
-module "server" {
+/* module "server" {
   source            = "./modules/vaultserver/"
   depends_on        = [module.subnet]
 
@@ -179,5 +184,5 @@ module "server" {
   account_id        = var.account_id
 }
 
-
+ */
 
