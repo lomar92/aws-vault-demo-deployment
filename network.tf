@@ -31,9 +31,14 @@ data "aws_availability_zones" "available" {
 }
 
 resource "aws_subnet" "subnet_public" {
-  for_each = toset ([data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[2]])
-  vpc_id     = aws_vpc.vpc.id
+  for_each = tomap ({
+    data.aws_availability_zones.available.names[0] = "10.0.1.0/24"
+    data.aws_availability_zones.available.names[1] = "10.0.2.0/24"
+    data.aws_availability_zones.available.names[2] = "10.0.3.0/24"
+    })
+  vpc_id            = aws_vpc.vpc.id
   availability_zone = each.key
+  cidr_block        = each.key.value
 }
 
 /* resource "aws_subnet" "subnet_public1" {

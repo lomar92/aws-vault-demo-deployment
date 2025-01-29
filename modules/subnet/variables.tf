@@ -1,4 +1,4 @@
-variable "vpc" {
+/* variable "vpc" {
     description = "VPC"
     type = string
 }
@@ -21,7 +21,7 @@ variable "az" {
 variable "subnet_name" {
     description = "name of the subnet"
     type = string
-}
+} */
 
 /* variable "subnet_count" {
     description = "number of subnets in vpc"
