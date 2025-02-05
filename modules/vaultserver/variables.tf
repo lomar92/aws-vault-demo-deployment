@@ -10,7 +10,6 @@ variable "instance_type" {
 
 variable "instance_name" {
   description = "Name of the instance"
-  type = string
 }
 
 variable "key" {
@@ -56,10 +55,6 @@ variable "organization" {
   type = string
 } 
 
-variable "raft_node" {
-  description = "Node number in Raft cluster"
-}  
-
 variable "VAULT_LICENSE" {
   default = "standard"
 }
@@ -84,3 +79,6 @@ variable "cert_pem" {
 variable "account_id" {
   description = "AWS account ID"
 }
+
+
+

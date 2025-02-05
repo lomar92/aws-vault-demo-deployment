@@ -92,3 +92,7 @@ data "aws_iam_policy_document" "vault-client" {
     resources = ["*"]
   }
 }
+
+resource "aws_kms_key" "kms_key_vault" {
+ description             = "Vault KMS key"
+}

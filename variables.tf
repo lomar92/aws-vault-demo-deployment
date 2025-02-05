@@ -1,16 +1,10 @@
-variable "availability_zone" {
-  description = "az into which instance is deployed"
-  type = string
-  default = "eu-central-1a"
-}
-variable "cidr_subnet" {
-  description = "CIDR block for the subnet"
-  default     = "10.0.1.0/24"
+variable "cidr_block" {
+  type = list(string)
+  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
-variable "vpc" {
-  description = "VPC to deploy all Resources into."
-  default = ""
+variable "region" {
+  default = "eu-central-1"
 }
 
 variable "ami" {
@@ -65,11 +59,3 @@ variable "account_id" {
   description = "AWS account ID"
 }
 
-variable "username" {
-  default = "admin"
-}
-
-variable "dbpassword" {
-  default = "supergeheim"
-  sensitive = true
-}
