@@ -1,4 +1,4 @@
-output "public_ip1" {
+/* output "public_ip1" {
   value = module.server1.public_ip_instance
 }
 
@@ -8,20 +8,9 @@ output "public_ip2" {
 
 output "public_ip3" {
   value = module.server3.public_ip_instance
-}
+} */
 
-# output "vault_dns" {
-#   value = aws_lb.vault-lb.dns_name
-# }
-
-output "subnet1" {
-  value = module.subnet1.subnet_id
-}
-
-output "subnet2" {
-  value = module.subnet2.subnet_id
-}
-
-output "subnet3" {
-  value = module.subnet3.subnet_id
-}
+# The key expression produced an invalid result: string required.
+/* output "public_ips" {
+  value = { for k in module.server : k => module.server[k].public_ip_instance }
+} */
