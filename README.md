@@ -1,4 +1,4 @@
-# Vault Demo Deployment in AWS with Terraform Cloud
+# Vault Demo Deployment in AWS with HCP Terraform
 
 This repository provides a Terraform configuration to deploy a **3-node** or **6-node** Vault Enterprise cluster on AWS, configured with **Integrated Storage (Raft)** and **AWS KMS Auto Unseal**.
 
