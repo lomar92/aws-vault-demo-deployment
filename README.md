@@ -68,3 +68,46 @@ test "pki_issue" "rsa_4096_cert_issuance" {
         }
     }
 }
+
+
+### Benchmark Results
+
+| **Metric**                      | **Value** |
+|-----------------------------|--------|
+| **Test Duration**           | 21,000 seconds (~5.83 hours) |
+| **Total Certificates Issued** | 117,352 |
+| **Average Issuance Rate**    | 5.59 certificates/sec |
+| **Mean Issuance Time**       | 1.79 seconds |
+| **95th Percentile**          | 3.96 seconds |
+| **99th Percentile**          | 5.49 seconds |
+| **Success Rate**             | 100% |
+
+---
+
+## System Performance Observations
+
+### CPU Utilization (Vault Nodes - `c5.12xlarge`)
+
+- **Vault Process Load**: ~**1010%** (equivalent to full utilization of 10 vCPUs)
+- **Observation**: RSA-4096 operations are **CPU-intensive**, making high-core instances essential.
+
+### Memory Consumption
+
+- **Available Memory**: ~94 GiB free
+- **Vault Process Memory Usage**: ~401 MiB per node
+- **Conclusion**: No significant memory bottlenecks detected.
+
+### CPU Utilization Comparison (`t2.micro` vs. `c5.12xlarge`)
+
+| Instance Type  | vCPUs | Memory | Vault CPU Utilization           |
+|---------------|-------|--------|--------------------------------|
+| `t2.micro`    | 1     | 1 GiB  | ~97.7% (single-core bottleneck) |
+| `c5.12xlarge` | 48    | 96 GiB | ~1000% (full utilization of 10 cores) |
+
+---
+
+## Conclusion
+
+- **CPU Dependency**: Vault’s performance for RSA-4096 certificate issuance scales with available CPU power.
+- **Recommendation**: For large-scale PKI implementations, high-core instances like `c5.12xlarge` should be used.
+- **Performance Replication Cluster**: Deploying a **Performance Replication Cluster** can further enhance throughput by distributing the workload across multiple nodes.
