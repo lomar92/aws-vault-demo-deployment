@@ -36,3 +36,4 @@ terraform.rc
 workspace.*
 .terraform.*
 
+vault_ssh_key.pem

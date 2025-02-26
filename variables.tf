@@ -16,7 +16,7 @@ variable "ami" {
 variable "instance_type" {
   description = "EC2 instance type"
   type = string
-  default = "t2.micro"
+  default = "c5.12xlarge"
 }
 
 variable "key" {
@@ -53,9 +53,14 @@ variable "common_name" {
 variable "organization" {
   description = "name of organization"
   type = string
+  default = "test"
 } 
 
 variable "account_id" {
   description = "AWS account ID"
 }
 
+variable "private_key_path" {
+  description = "Pfad zur privaten SSH-Schlüsseldatei"
+  type        = string
+}

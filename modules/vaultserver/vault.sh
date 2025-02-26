@@ -3,7 +3,7 @@
 # Bootstrap script for installing Vault 
 # Send the log output from this script to user-data.log, syslog, and the console
 # From: https://alestic.com/2010/12/ec2-user-data-output/
-exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+# exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
 # PRIVATE_IP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
 # PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
@@ -42,6 +42,11 @@ sudo chmod 640 /etc/vault.d/vault.hcl
 sudo mkdir /opt/raft
 sudo chown -R vault:vault /opt/raft
 
+sudo mkdir -p /var/log
+sudo touch /var/log/vault.log
+sudo chmod 640 /var/log/vault.log
+sudo chown vault:vault /var/log/vault.log
+
 sudo cat << EOF > /etc/vault.d/vault.hcl
 listener "tcp" {
   address       = "0.0.0.0:8200"
@@ -69,6 +74,7 @@ license_path = "/etc/vault.d/license.hclic"
 api_addr = "https://$${PUBLIC_HOSTNAME}:8200"
 cluster_addr = "https://$${HOSTNAME}:8201"
 ui = true 
+log_level = "Debug"
 EOF
 
 sudo touch /etc/systemd/system/vault.service
@@ -122,5 +128,6 @@ sleep 60
 # export VAULT_ADDR=https://127.0.0.1:8200
 # vault operator init -format=json > vault.txt
 # cat vault.txt | jq -r .root_token > vaulttoken
-# VAULT_TOKEN=$(cat vaulttoken)
+# export VAULT_TOKEN=$(cat vaulttoken)
+# export VAULT_SKIP_VERIFY=true
 # vault login $VAULT_TOKEN

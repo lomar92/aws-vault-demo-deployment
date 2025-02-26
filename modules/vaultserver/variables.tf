@@ -14,7 +14,7 @@ variable "instance_name" {
 
 variable "key" {
   description = "Key for SSHing into EC2 instance"
-  default = "sasano"
+  default = "vault_ssh_key"
 }
 
 variable "kms" {
@@ -78,6 +78,7 @@ variable "cert_pem" {
 
 variable "account_id" {
   description = "AWS account ID"
+  default = "AKIAQJYHY2BAZZREJALO"
 }
 
 

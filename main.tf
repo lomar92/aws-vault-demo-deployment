@@ -49,3 +49,29 @@ module "server" {
   account_id        = var.account_id
 }
 
+resource "aws_instance" "benchmark_instance" {
+  ami                         = var.ami
+  instance_type               = "t3.micro"
+  key_name                    = var.key
+  subnet_id                   = aws_subnet.subnet_public[0].id  # Nutze das erste Subnetz
+  vpc_security_group_ids      = [aws_security_group.sg_vpc.id]
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "Vault-Benchmark-Instance"
+    project = "vault"
+  }
+
+  user_data = file("benchmark.sh")
+  provisioner "file" {
+    source      = "config.hcl"       # Lokale Datei
+    destination = "/home/ec2-user/config.hcl"  # Ziel auf EC2
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = file(var.private_key_path)
+      host        = self.public_ip
+    }
+  }
+}

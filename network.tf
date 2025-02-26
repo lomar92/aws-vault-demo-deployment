@@ -37,6 +37,12 @@ resource "aws_subnet" "subnet_public" {
   cidr_block        = var.cidr_block[count.index]
 }
 
+resource "aws_route_table_association" "public_subnets" {
+  count          = length(aws_subnet.subnet_public)
+  route_table_id = aws_route_table.rtb_public.id
+  subnet_id      = aws_subnet.subnet_public[count.index].id
+}
+
 resource "aws_security_group" "sg_vpc" {
   name   = "sg_vpc"
   vpc_id = aws_vpc.vpc.id
