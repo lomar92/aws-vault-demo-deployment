@@ -68,7 +68,7 @@ test "pki_issue" "rsa_4096_cert_issuance" {
         }
     }
 }
-
+```
 
 ### Benchmark Results
 
