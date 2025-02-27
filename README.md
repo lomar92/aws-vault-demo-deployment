@@ -102,7 +102,7 @@ test "pki_issue" "rsa_4096_cert_issuance" {
 | Instance Type  | vCPUs | Memory | Vault CPU Utilization           |
 |---------------|-------|--------|--------------------------------|
 | `t2.micro`    | 1     | 1 GiB  | ~97.7% (single-core bottleneck) |
-| `c5.12xlarge` | 48    | 96 GiB | ~1000% (full utilization of 10 cores) |
+| `c5.12xlarge` | 48    | 96 GiB | ~1010% (full utilization of 10 cores) |
 
 ---
 
