@@ -110,4 +110,4 @@ test "pki_issue" "rsa_4096_cert_issuance" {
 
 - **CPU Dependency**: Vault’s performance for RSA-4096 certificate issuance scales with available CPU power.
 - **Recommendation**: For large-scale PKI implementations, high-core instances like `c5.12xlarge` should be used.
-- **Performance Replication Cluster**: Deploying a **Performance Replication Cluster** can further enhance throughput by distributing the workload across multiple nodes.
+- **Performance Replication Cluster**: Deploying a **Performance Replication Cluster** can further enhance throughput by distributing the workload across multiple clusters.
